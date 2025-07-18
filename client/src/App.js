@@ -1,33 +1,36 @@
 import React from 'react';
+import { Routes, Route, Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import {
   FileTextOutlined,
+  TeamOutlined,
+  FundOutlined,
+  PlusOutlined,
   UploadOutlined,
   UserOutlined,
-  BarChartOutlined,
-  HomeOutlined,
-  BugOutlined
+  FileSearchOutlined
 } from '@ant-design/icons';
-
 import Dashboard from './pages/Dashboard';
+import Patients from './pages/Patients';
 import PDFUpload from './pages/PDFUpload';
 import ManualEntry from './pages/ManualEntry';
 import Records from './pages/Records';
 import Reports from './pages/Reports';
-import Patients from './pages/Patients';
-import PDFTest from './PDFTest';
+import './App.css';
 
 const { Header, Sider, Content } = Layout;
 
-const AppLayout = () => {
-  const location = useLocation();
-  
+function App() {
   const menuItems = [
     {
-      key: '/',
-      icon: <HomeOutlined />,
-      label: <Link to="/">仪表板</Link>,
+      key: '/dashboard',
+      icon: <FundOutlined />,
+      label: <Link to="/dashboard">仪表板</Link>,
+    },
+    {
+      key: '/patients',
+      icon: <TeamOutlined />,
+      label: <Link to="/patients">家庭成员管理</Link>,
     },
     {
       key: '/upload',
@@ -35,9 +38,9 @@ const AppLayout = () => {
       label: <Link to="/upload">PDF上传</Link>,
     },
     {
-      key: '/manual',
-      icon: <FileTextOutlined />,
-      label: <Link to="/manual">手动录入</Link>,
+      key: '/entry',
+      icon: <PlusOutlined />,
+      label: <Link to="/entry">手动录入</Link>,
     },
     {
       key: '/records',
@@ -46,66 +49,51 @@ const AppLayout = () => {
     },
     {
       key: '/reports',
-      icon: <BarChartOutlined />,
-      label: <Link to="/reports">疾病报告</Link>,
-    },
-    {
-      key: '/patients',
-      icon: <UserOutlined />,
-      label: <Link to="/patients">家庭成员管理</Link>,
-    },
-    {
-      key: '/pdf-test',
-      icon: <BugOutlined />,
-      label: <Link to="/pdf-test">PDF测试</Link>,
+      icon: <FileSearchOutlined />,
+      label: <Link to="/reports">报告生成</Link>,
     },
   ];
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Header style={{ background: '#1890ff', padding: '0 24px' }}>
+      <Header style={{ display: 'flex', alignItems: 'center', padding: '0 24px' }}>
         <div style={{ color: 'white', fontSize: '20px', fontWeight: 'bold' }}>
           医疗数据管理系统
         </div>
       </Header>
       <Layout>
-        <Sider width={200} style={{ background: '#fff' }}>
+        <Sider width={250} style={{ background: '#fff' }}>
           <Menu
             mode="inline"
-            selectedKeys={[location.pathname]}
+            defaultSelectedKeys={['/dashboard']}
             style={{ height: '100%', borderRight: 0 }}
             items={menuItems}
           />
         </Sider>
-        <Layout style={{ padding: '0 24px 24px' }}>
+        <Layout style={{ padding: '24px' }}>
           <Content
             style={{
-              background: '#fff',
               padding: 24,
               margin: 0,
               minHeight: 280,
-              borderRadius: '8px',
-              boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+              background: '#fff',
+              borderRadius: '8px'
             }}
           >
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/patients" element={<Patients />} />
               <Route path="/upload" element={<PDFUpload />} />
-              <Route path="/manual" element={<ManualEntry />} />
+              <Route path="/entry" element={<ManualEntry />} />
               <Route path="/records" element={<Records />} />
               <Route path="/reports" element={<Reports />} />
-              <Route path="/patients" element={<Patients />} />
-              <Route path="/pdf-test" element={<PDFTest />} />
             </Routes>
           </Content>
         </Layout>
       </Layout>
     </Layout>
   );
-};
-
-function App() {
-  return <AppLayout />;
 }
 
 export default App;

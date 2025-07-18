@@ -16,7 +16,7 @@ import {
   Alert
 } from 'antd';
 import { PlusOutlined, SaveOutlined, UserOutlined } from '@ant-design/icons';
-import { addMedicalRecord, getPatients } from '../utils/api';
+import { createMedicalRecord, getPatients } from '../utils/api';
 import dayjs from 'dayjs';
 import { 
   getLabTestCategories, 
@@ -210,14 +210,34 @@ const ManualEntry = () => {
       }
 
       console.log('准备发送到API的数据:', recordData);
-      const response = await addMedicalRecord(recordData);
+      const response = await createMedicalRecord(recordData);
       console.log('API响应:', response);
       
       if (response.success) {
-        message.success('医疗记录添加成功！');
+        message.success(`医疗记录添加成功！可继续为 ${selectedPatient.name} 录入其他记录`, 3);
+        
+        // 保存当前选择的患者信息
+        const currentPatientId = selectedPatient ? selectedPatient.id : null;
+        
+        // 重置表单但保留患者选择
         form.resetFields();
         setKeywords([]);
-        setSelectedPatient(null);
+        
+        // 恢复患者选择
+        if (currentPatientId) {
+          form.setFieldsValue({ patientId: currentPatientId });
+          // selectedPatient状态保持不变，不需要重新设置
+        } else {
+          setSelectedPatient(null);
+        }
+        
+        // 重置其他状态
+        setSelectedCategory('');
+        setSelectedTest('');
+        setSelectedSubItems([]);
+        setLabResults([]);
+        setCurrentCheckType('');
+        
         // 重置骨密度数据
         setBoneDensityData(() => {
           let arr = [];
@@ -228,6 +248,10 @@ const ManualEntry = () => {
           });
           return arr;
         });
+        
+        // 恢复默认文档类型
+        setDocumentType('inpatient_record');
+        form.setFieldsValue({ documentType: 'inpatient_record' });
       } else {
         message.error('添加失败，请重试！');
       }
@@ -373,15 +397,18 @@ const ManualEntry = () => {
           <Col span={12}>
             {selectedPatient && (
               <div style={{ marginTop: 32 }}>
-                <Card size="small" style={{ backgroundColor: '#f6ffed' }}>
+                <Card size="small" style={{ backgroundColor: '#f6ffed', borderColor: '#b7eb8f' }}>
                   <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
                     <UserOutlined style={{ marginRight: 8, color: '#52c41a' }} />
                     <Text strong>已选择家庭成员：{selectedPatient.name}</Text>
                   </div>
-                  <div style={{ fontSize: '12px', color: '#666' }}>
+                  <div style={{ fontSize: '12px', color: '#666', marginBottom: 8 }}>
                     <div>性别：{selectedPatient.gender}</div>
                     <div>年龄：{getAgeFromBirthDate(selectedPatient.birthDate)}岁</div>
                     {selectedPatient.phone && <div>电话：{selectedPatient.phone}</div>}
+                  </div>
+                  <div style={{ fontSize: '11px', color: '#52c41a', fontStyle: 'italic' }}>
+                    💡 保存记录后将继续为该成员录入下一条记录
                   </div>
                 </Card>
               </div>
@@ -731,10 +758,9 @@ const ManualEntry = () => {
             <>
               <Form.Item
                 name="checkName"
-                label="检查名称"
-                rules={[{ required: true, message: '请输入检查名称' }]}
+                label="检查部位"
               >
-                <Input placeholder="请输入检查名称" />
+                <Input placeholder="请输入检查部位" />
               </Form.Item>
 
               <Form.Item
@@ -1210,7 +1236,7 @@ const ManualEntry = () => {
           <li><strong>家庭成员信息</strong>：选择家庭成员后将显示家庭成员基本信息，并可查看详细联系方式。</li>
           <li><strong>医疗信息</strong>：根据文档类型填写相应的医疗信息</li>
           <li><strong>检验报告</strong>：填写检验项目、结果、正常范围、备注</li>
-                          <li><strong>检查报告</strong>：填写检查类型、检查名称、检查描述、检查结果、是否用造影剂、备注</li>
+                          <li><strong>检查报告</strong>：填写检查类型、检查部位、检查描述、检查结果、是否用造影剂、备注</li>
           <li><strong>疾病关键词</strong>：添加相关的疾病关键词，便于后续按疾病生成报告</li>
         </ul>
       </Card>

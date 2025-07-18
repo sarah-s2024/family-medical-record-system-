@@ -35,6 +35,7 @@ import {
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { getMedicalRecords, updateMedicalRecord, deleteMedicalRecord } from '../utils/api';
+import { getLabTestName, getLabTestCategoryName } from '../config/labTests';
 import dayjs from 'dayjs';
 
 const { Title, Text } = Typography;
@@ -203,6 +204,10 @@ const Records = () => {
         if (documentType === 'lab_result') {
           // 检验报告：按检验项目分组
           const testItem = record.medicalData.testItem || '未知检验项目';
+          const testCategory = record.medicalData.testCategory || '';
+          // 获取中文名称
+          const testItemName = getLabTestName(testCategory, testItem);
+          
           const existingGroup = groupedByType[documentType].find(group => 
             group.key === testItem
           );
@@ -212,7 +217,7 @@ const Records = () => {
           } else {
             groupedByType[documentType].push({
               key: testItem,
-              title: testItem,
+              title: testItemName, // 使用中文名称作为标题
               records: [record]
             });
           }
@@ -285,10 +290,27 @@ const Records = () => {
         }
       });
 
-      // 对每个分组内的记录按时间升序排序
+      // 对每个分组内的记录进行排序
       Object.keys(groupedByType).forEach(type => {
         groupedByType[type].forEach(group => {
-          group.records.sort((a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf());
+          if (type === 'diagnostic_report') {
+            // 检查报告：先按检查部位排序，相同部位内按时间升序排序
+            group.records.sort((a, b) => {
+              const aLocation = a.medicalData.checkName || '';
+              const bLocation = b.medicalData.checkName || '';
+              
+              // 先按检查部位排序
+              if (aLocation !== bLocation) {
+                return aLocation.localeCompare(bLocation, 'zh-CN');
+              }
+              
+              // 相同部位内按时间升序排序
+              return dayjs(a.date).valueOf() - dayjs(b.date).valueOf();
+            });
+          } else {
+            // 其他类型记录：直接按时间升序排序
+            group.records.sort((a, b) => dayjs(a.date).valueOf() - dayjs(b.date).valueOf());
+          }
         });
       });
 
@@ -794,13 +816,13 @@ const Records = () => {
         {documentType === 'lab_result' && medicalData.testCategory && (
           <div style={{ marginBottom: 8 }}>
             <Text strong>检验分类：</Text>
-            <Text>{medicalData.testCategory}</Text>
+            <Text>{getLabTestCategoryName(medicalData.testCategory)}</Text>
           </div>
         )}
         {documentType === 'lab_result' && medicalData.testItem && (
           <div style={{ marginBottom: 8 }}>
             <Text strong>检验项目：</Text>
-            <Text>{medicalData.testItem}</Text>
+            <Text>{getLabTestName(medicalData.testCategory, medicalData.testItem)}</Text>
           </div>
         )}
         {documentType === 'lab_result' && medicalData.subItems && medicalData.subItems.length > 0 && (
@@ -829,7 +851,7 @@ const Records = () => {
         )}
         {documentType === 'diagnostic_report' && medicalData.checkName && (
           <div style={{ marginBottom: 8 }}>
-            <Text strong>检查名称：</Text>
+            <Text strong>检查部位：</Text>
             <Text>{medicalData.checkName}</Text>
           </div>
         )}
@@ -1306,6 +1328,15 @@ const Records = () => {
                                             </Popconfirm>
                                           </div>
                                         </div>
+                                        {/* 显示检查部位信息（针对检查报告） */}
+                                        {record.documentType === 'diagnostic_report' && record.medicalData.checkName && (
+                                          <div style={{ marginBottom: 6 }}>
+                                            <Text strong style={{ fontSize: 10 }}>检查部位：</Text>
+                                            <Tag size="small" color="orange" style={{ fontSize: 9, marginLeft: 4 }}>
+                                              {record.medicalData.checkName}
+                                            </Tag>
+                                          </div>
+                                        )}
                                         {record.keywords.length > 0 && (
                                           <div>
                                             <Text strong style={{ fontSize: 10 }}>相关疾病：</Text>
@@ -1764,9 +1795,9 @@ const Records = () => {
                 <>
                   <Form.Item
                     name={['medicalData', 'checkName']}
-                    label="检查名称"
+                    label="检查部位"
                   >
-                    <Input placeholder="请输入检查名称" />
+                    <Input placeholder="请输入检查部位" />
                   </Form.Item>
 
                   <Form.Item

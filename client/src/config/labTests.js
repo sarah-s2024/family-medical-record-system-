@@ -883,4 +883,20 @@ export const getLabTestSubItems = (categoryKey, testKey) => {
 export const getSubItemInfo = (categoryKey, testKey, subItemName) => {
   const subItems = getLabTestSubItems(categoryKey, testKey);
   return subItems.find(item => item.name === subItemName);
+};
+
+// 获取检验分类中文名称
+export const getLabTestCategoryName = (categoryKey) => {
+  const category = labTestCategories[categoryKey];
+  if (!category) return categoryKey; // 如果找不到，返回原始key
+  
+  return category.name;
+};
+
+// 获取检验项目中文名称
+export const getLabTestName = (categoryKey, testKey) => {
+  const category = labTestCategories[categoryKey];
+  if (!category || !category.tests[testKey]) return testKey; // 如果找不到，返回原始key
+  
+  return category.tests[testKey].name;
 }; 

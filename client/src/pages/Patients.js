@@ -27,7 +27,7 @@ import {
   PhoneOutlined,
   MailOutlined
 } from '@ant-design/icons';
-import { getPatients, addPatient, updatePatient, deletePatient } from '../utils/api';
+import { getPatients, createPatient, updatePatient, deletePatient } from '../utils/api';
 import dayjs from 'dayjs';
 
 const { Title, Text } = Typography;
@@ -71,7 +71,7 @@ const Patients = () => {
         ...values,
         birthDate: values.birthDate ? values.birthDate.format('YYYY-MM-DD') : null
       };
-      const response = await addPatient(patientData);
+      const response = await createPatient(patientData);
       
       if (response.success) {
         message.success('患者信息添加成功！');
@@ -121,7 +121,8 @@ const Patients = () => {
       const response = await deletePatient(patientId);
       
       if (response.success) {
-        message.success('患者删除成功！');
+        // 显示详细的删除信息，包括删除的医疗记录数量
+        message.success(response.message || '患者及相关医疗记录删除成功！', 4);
         fetchPatients();
       } else {
         message.error('删除失败，请重试！');

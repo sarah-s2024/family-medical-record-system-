@@ -1,216 +1,5 @@
 [
   {
-    "id": "d1ecfcc8-30f6-41f8-b1d0-294f070da063",
-    "documentType": "inpatient_record",
-    "patientInfo": {
-      "name": "测试患者",
-      "birthDate": "1990-05-15",
-      "gender": "男"
-    },
-    "medicalData": {
-      "medicalInstitution": "斯坦福",
-      "inpatientDepartment": "外科"
-    },
-    "date": "2025-07-11T02:03:01.050Z",
-    "keywords": [
-      "高血压"
-    ],
-    "isManual": true,
-    "updatedAt": "2025-07-12T02:28:10.320Z"
-  },
-  {
-    "documentType": "outpatient_record",
-    "patientInfo": {
-      "name": "测试患者",
-      "birthDate": "1990-05-15",
-      "gender": "男"
-    },
-    "medicalData": {
-      "medicalInstitution": "斯坦福",
-      "doctorName": "王医生",
-      "chiefComplaint": "咳嗽、发热3天，伴有胸闷",
-      "presentIllness": "患者3天前受凉后出现咳嗽，干咳为主，伴有发热，体温最高38.5℃，伴有胸闷，无胸痛，无呼吸困难。",
-      "physicalExamination": "体温38.2℃，脉搏88次/分，呼吸20次/分，血压120/80mmHg。神志清楚，精神可。双肺呼吸音粗，可闻及少量干啰音。心率88次/分，律齐，各瓣膜听诊区未闻及病理性杂音。",
-      "followUp": "3天后复诊，如症状加重及时就诊。"
-    },
-    "date": "2025-07-11T18:15:49.853Z",
-    "keywords": [
-      "咳嗽",
-      "胸闷",
-      "发热"
-    ],
-    "parseConfidence": 100,
-    "parseDetails": [
-      "成功提取患者姓名: 李四",
-      "成功提取出生日期: 1988-06-20",
-      "成功提取性别: 女",
-      "成功提取chiefComplaint: 咳嗽、发热3天，伴有胸闷",
-      "成功提取presentIllness: 患者3天前受凉后出现咳嗽，干咳为主，伴有发热，体温最高38.5℃，伴有胸闷，无胸痛，无呼吸困难。",
-      "成功提取physicalExamination: 体温38.2℃，脉搏88次/分，呼吸20次/分，血压120/80mmHg。神志清楚，精神可。双肺呼吸音粗，可闻及少量干啰音。心率88次/分，律齐，各瓣膜听诊区未闻及病理性杂音。",
-      "成功提取treatmentPlan: 1. 抗感染治疗：阿莫西林胶囊 0.5g 每日3次口服",
-      "成功提取followUp: 3天后复诊，如症状加重及时就诊。",
-      "识别到疾病关键词: 咳嗽",
-      "识别到疾病关键词: 咳嗽",
-      "识别到疾病关键词: 胸闷",
-      "识别到疾病关键词: 发热"
-    ],
-    "fileName": "test_outpatient.txt",
-    "filePath": "/Users/sarahshi/Desktop/医疗软件管理系统/uploads/1752257749850-722538b5-8236-47bc-a8ea-e19926f58ac3-test_outpatient.txt",
-    "id": "cbbc7611-1d7a-4781-bd66-b2f56034c0c3",
-    "updatedAt": "2025-07-12T01:27:19.561Z"
-  },
-  {
-    "id": "fb5331fb-50d9-4fdc-afdc-020b44327011",
-    "documentType": "outpatient_record",
-    "patientInfo": {
-      "name": "测试患者",
-      "birthDate": "1990-05-15",
-      "gender": "男"
-    },
-    "medicalData": {
-      "medicalInstitution": "斯坦福",
-      "doctorName": "王医生",
-      "chiefComplaint": "头痛、头晕2天",
-      "presentIllness": "患者2天前无明显诱因出现头痛、头晕，伴有恶心，无呕吐，无发热。",
-      "physicalExamination": "血压：160/95mmHg，心率：85次/分，体温：36.8℃",
-      "followUp": "1周后复诊"
-    },
-    "date": "2025-07-11T18:15:58.064Z",
-    "keywords": [
-      "高血压",
-      "头痛"
-    ],
-    "isManual": true,
-    "updatedAt": "2025-07-12T01:27:27.451Z"
-  },
-  {
-    "documentType": "outpatient_record",
-    "patientInfo": {
-      "id": "bd35dbc2-a7aa-4201-b2e7-74eec127a37b",
-      "name": "测试患者",
-      "birthDate": "1990-01-01",
-      "gender": "男"
-    },
-    "medicalData": {
-      "department": "内科",
-      "doctorName": "张医生",
-      "chiefComplaint": "患者主诉头痛、头晕3天",
-      "presentIllness": "患者3天前无明显诱因出现头痛、头晕，伴有恶心，无呕吐，无发热，无意识障碍",
-      "physicalExamination": "体温36.5℃，脉搏80次/分，血压120/80mmHg，神志清楚，精神可，双瞳孔等大等圆，对光反射灵敏",
-      "assessmentAndPlan": "考虑偏头痛，建议完善头颅CT检查，给予对症治疗",
-      "followUp": "1周后复诊"
-    },
-    "date": "2025-07-11T18:25:28.175Z",
-    "keywords": [
-      "头痛",
-      "头晕",
-      "恶心",
-      "呕吐",
-      "发热"
-    ],
-    "parseConfidence": 80,
-    "parseDetails": [
-      "成功提取department: 内科",
-      "成功提取doctorName: 张医生",
-      "成功提取chiefComplaint: 患者主诉头痛、头晕3天",
-      "成功提取presentIllness: 患者3天前无明显诱因出现头痛、头晕，伴有恶心，无呕吐，无发热，无意识障碍",
-      "成功提取physicalExamination: 体温36.5℃，脉搏80次/分，血压120/80mmHg，神志清楚，精神可，双瞳孔等大等圆，对光反射灵敏",
-      "成功提取assessmentAndPlan: 考虑偏头痛，建议完善头颅CT检查，给予对症治疗",
-      "成功提取followUp: 1周后复诊",
-      "识别到疾病关键词: 头痛",
-      "识别到疾病关键词: 头痛",
-      "识别到疾病关键词: 头晕",
-      "识别到疾病关键词: 恶心",
-      "识别到疾病关键词: 呕吐",
-      "识别到疾病关键词: 发热"
-    ],
-    "fileName": "test_outpatient_new.txt",
-    "filePath": "/Users/sarahshi/Desktop/医疗软件管理系统/uploads/1752258328173-0f3fdbff-5a03-4f81-ad62-844a6d65dd1e-test_outpatient_new.txt",
-    "id": "7bce64ac-b0a5-4737-938a-ffd86694c73a"
-  },
-  {
-    "documentType": "inpatient_record",
-    "patientInfo": {
-      "id": "bd35dbc2-a7aa-4201-b2e7-74eec127a37b",
-      "name": "测试患者",
-      "birthDate": "1990-01-01",
-      "gender": "男"
-    },
-    "medicalData": {
-      "inpatientDepartment": "心内科",
-      "attendingPhysician": "李医生",
-      "inpatientChiefComplaint": "患者主诉胸痛、气短1周",
-      "inpatientPresentIllness": "患者1周前无明显诱因出现胸痛、气短，伴有心悸，无发热，无意识障碍",
-      "courseRecord": "患者入院后给予心电监护，完善相关检查，给予对症治疗",
-      "consultationRecord": "请心内科专家会诊，建议完善冠脉造影检查",
-      "surgeryRecord": "行冠脉造影术，发现前降支狭窄70%，建议支架植入",
-      "labAndImaging": "血常规、生化、心电图、心脏彩超等检查结果正常",
-      "dischargePlan": "患者病情稳定，建议出院后继续药物治疗，定期复查",
-      "dischargeExamination": "患者一般情况可，生命体征平稳，可以出院",
-      "medicationGuidance": "阿司匹林100mg qd，氯吡格雷75mg qd，他汀类药物等",
-      "inpatientFollowUp": "1个月后门诊复查，3个月后复查冠脉造影"
-    },
-    "date": "2025-07-11T18:50:14.946Z",
-    "keywords": [
-      "气短",
-      "心悸",
-      "发热"
-    ],
-    "parseConfidence": 100,
-    "parseDetails": [
-      "成功提取inpatientDepartment: 心内科",
-      "成功提取attendingPhysician: 李医生",
-      "成功提取inpatientChiefComplaint: 患者主诉胸痛、气短1周",
-      "成功提取inpatientPresentIllness: 患者1周前无明显诱因出现胸痛、气短，伴有心悸，无发热，无意识障碍",
-      "成功提取courseRecord: 患者入院后给予心电监护，完善相关检查，给予对症治疗",
-      "成功提取consultationRecord: 请心内科专家会诊，建议完善冠脉造影检查",
-      "成功提取surgeryRecord: 行冠脉造影术，发现前降支狭窄70%，建议支架植入",
-      "成功提取labAndImaging: 血常规、生化、心电图、心脏彩超等检查结果正常",
-      "成功提取dischargePlan: 患者病情稳定，建议出院后继续药物治疗，定期复查",
-      "成功提取dischargeExamination: 患者一般情况可，生命体征平稳，可以出院",
-      "成功提取medicationGuidance: 阿司匹林100mg qd，氯吡格雷75mg qd，他汀类药物等",
-      "成功提取inpatientFollowUp: 1个月后门诊复查，3个月后复查冠脉造影",
-      "识别到疾病关键词: 气短",
-      "识别到疾病关键词: 心悸",
-      "识别到疾病关键词: 发热"
-    ],
-    "fileName": "test_inpatient_new.txt",
-    "filePath": "/Users/sarahshi/Desktop/医疗软件管理系统/uploads/1752259814944-e74da343-aac3-46c4-b424-42201decb3b2-test_inpatient_new.txt",
-    "id": "27fe3910-d795-4b3a-92b5-acdfa2a28625"
-  },
-  {
-    "documentType": "diagnostic_report",
-    "patientInfo": {
-      "id": "f8ad517f-cd92-4449-8e0d-484f32f764f0",
-      "name": "测试患者",
-      "birthDate": "1990-05-15",
-      "gender": "男"
-    },
-    "medicalData": {
-      "checkType": "影像学检查",
-      "checkName": "胸部CT扫描",
-      "checkDescription": "患者进行胸部CT检查，显示肺部、心脏和纵隔情况",
-      "checkResult": "肺部未见明显异常，心脏大小正常，纵隔无异常",
-      "useContrast": "否"
-    },
-    "date": "2025-07-11T19:07:12.788Z",
-    "keywords": [],
-    "parseConfidence": 100,
-    "parseDetails": [
-      "成功提取患者姓名: 测试患者",
-      "成功提取性别: 男",
-      "成功提取年龄: 45岁",
-      "成功提取checkType: 影像学检查",
-      "成功提取checkName: 胸部CT扫描",
-      "成功提取checkDescription: 患者进行胸部CT检查，显示肺部、心脏和纵隔情况",
-      "成功提取checkResult: 肺部未见明显异常，心脏大小正常，纵隔无异常",
-      "成功提取useContrast: 否"
-    ],
-    "fileName": "test_check_report.txt",
-    "filePath": "/Users/sarahshi/Desktop/医疗软件管理系统/uploads/1752260832787-7856e955-4472-4404-926e-234ff7371c81-test_check_report.txt",
-    "id": "03507776-54e8-4954-9da2-ea396e1087de"
-  },
-  {
     "id": "0bf6271b-949d-4225-880d-28cda5f613b1",
     "documentType": "diagnostic_report",
     "patientInfo": {
@@ -383,29 +172,30 @@
     "id": "edd7f0ab-0909-48de-9ad8-37fb6e71a93f",
     "documentType": "inpatient_record",
     "patientInfo": {
-      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
       "name": "六",
       "birthDate": "1994-05-18",
       "gender": "女"
     },
     "medicalData": {
       "medicalInstitution": "斯坦福",
+      "notes": "",
       "inpatientDepartment": "心内科",
       "attendingPhysician": "3",
       "inpatientChiefComplaint": "3",
       "inpatientPresentIllness": "3",
-      "courseRecord": "3",
-      "notes": ""
+      "courseRecord": "3"
     },
     "date": "2025-07-12T00:36:18.077Z",
-    "keywords": [],
-    "isManual": true
+    "keywords": [
+      "心内膜炎"
+    ],
+    "isManual": true,
+    "updatedAt": "2025-07-18T00:22:07.260Z"
   },
   {
     "id": "7e0ab8dc-fc9d-459a-b256-cfbc73f2974d",
     "documentType": "diagnostic_report",
     "patientInfo": {
-      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
       "name": "六",
       "birthDate": "1994-05-18",
       "gender": "女"
@@ -413,13 +203,15 @@
     "medicalData": {
       "medicalInstitution": "斯坦福",
       "checkType": "X线",
-      "checkName": "颈椎x线",
+      "checkName": "腰椎",
       "checkDescription": "3",
-      "checkResult": "3"
+      "checkResult": "3",
+      "boneDensityTable": []
     },
     "date": "2025-07-12T00:37:11.534Z",
     "keywords": [],
-    "isManual": true
+    "isManual": true,
+    "updatedAt": "2025-07-17T22:50:14.783Z"
   },
   {
     "id": "d3a34e53-cabf-460b-8adf-783f54888aef",
@@ -601,5 +393,335 @@
     "keywords": [],
     "isManual": true,
     "updatedAt": "2025-07-12T03:03:03.002Z"
+  },
+  {
+    "id": "2baad81a-ca4a-477c-ae97-4493c67042f2",
+    "documentType": "lab_result",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "testCategory": "blood_tests",
+      "testItem": "blood_routine",
+      "subItems": [
+        {
+          "key": "白细胞计数",
+          "subItemName": "白细胞计数",
+          "unit": "×10^9/L",
+          "normalRange": "3.5-9.5",
+          "result": "2",
+          "status": "normal"
+        },
+        {
+          "key": "中性粒细胞",
+          "subItemName": "中性粒细胞",
+          "unit": "%",
+          "normalRange": "40-75",
+          "result": "2",
+          "status": "normal"
+        },
+        {
+          "key": "淋巴细胞",
+          "subItemName": "淋巴细胞",
+          "unit": "%",
+          "normalRange": "20-50",
+          "result": "2",
+          "status": "normal"
+        },
+        {
+          "key": "嗜酸性粒细胞",
+          "subItemName": "嗜酸性粒细胞",
+          "unit": "%",
+          "normalRange": "0.5-5",
+          "result": "2",
+          "status": "normal"
+        },
+        {
+          "key": "嗜碱性粒细胞",
+          "subItemName": "嗜碱性粒细胞",
+          "unit": "%",
+          "normalRange": "0-1",
+          "result": "2",
+          "status": "normal"
+        },
+        {
+          "key": "单核细胞",
+          "subItemName": "单核细胞",
+          "unit": "%",
+          "normalRange": "3-10",
+          "result": "2",
+          "status": "normal"
+        },
+        {
+          "key": "红细胞计数",
+          "subItemName": "红细胞计数",
+          "unit": "×10^12/L",
+          "normalRange": "3.5-5.5",
+          "result": "2",
+          "status": "normal"
+        }
+      ]
+    },
+    "date": "2025-07-17T22:40:05.881Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "28e03497-4263-4147-96d0-a735d657da01",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "CT",
+      "checkName": "肺",
+      "checkDescription": "呃呃呃呃呃",
+      "checkResult": "333333333",
+      "useContrast": "",
+      "notes": ""
+    },
+    "date": "2022-04-05T07:00:00.000Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "d0482e79-b8ca-472e-a556-e0ff8780d6ca",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "CT",
+      "checkName": "右肩",
+      "checkDescription": "鹅鹅鹅鹅鹅鹅",
+      "checkResult": "呜呜呜呜呜呜",
+      "useContrast": "",
+      "notes": ""
+    },
+    "date": "2023-05-25T07:00:00.000Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "d46c0235-97dc-406c-b7d1-015cf80ba87d",
+    "documentType": "lab_result",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "testCategory": "blood_tests",
+      "testItem": "lipid_metabolism",
+      "subItems": [
+        {
+          "key": "脂蛋白(a)",
+          "subItemName": "脂蛋白(a)",
+          "unit": "mg/dL",
+          "normalRange": "<30",
+          "result": "33",
+          "status": "normal"
+        },
+        {
+          "key": "载脂蛋白E",
+          "subItemName": "载脂蛋白E",
+          "unit": "mg/dL",
+          "normalRange": "3-7",
+          "result": "3",
+          "status": "normal"
+        },
+        {
+          "key": "载脂蛋白B",
+          "subItemName": "载脂蛋白B",
+          "unit": "g/L",
+          "normalRange": "0.6-1.1",
+          "result": "0.7",
+          "status": "normal"
+        },
+        {
+          "key": "低密度脂蛋白胆固醇",
+          "subItemName": "低密度脂蛋白胆固醇",
+          "unit": "mmol/L",
+          "normalRange": "<3.4",
+          "result": "3",
+          "status": "normal"
+        },
+        {
+          "key": "高密度脂蛋白胆固醇",
+          "subItemName": "高密度脂蛋白胆固醇",
+          "unit": "mmol/L",
+          "normalRange": ">1.0",
+          "result": "8",
+          "status": "normal"
+        },
+        {
+          "key": "甘油三酯",
+          "subItemName": "甘油三酯",
+          "unit": "mmol/L",
+          "normalRange": "<1.7",
+          "result": "5",
+          "status": "normal"
+        }
+      ]
+    },
+    "date": "2025-03-05T08:00:00.000Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "7d35000d-6503-4182-a23d-6411dc966f0e",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "MRI",
+      "checkName": "脑部",
+      "checkDescription": "热热热热热热热热热热热仍然",
+      "checkResult": "额呃呃呃呃呃呃呃呃呃",
+      "useContrast": "否"
+    },
+    "date": "2025-07-17T23:57:54.096Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "9710f155-128d-4c8f-9216-2219cb6e74ef",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "MRI",
+      "checkName": "上肢",
+      "checkDescription": "3333333333",
+      "checkResult": "热热热热热热热热热热热若"
+    },
+    "date": "2025-07-17T23:58:21.530Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "df5472b9-0872-4388-bae3-17920883ddaa",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "超声",
+      "checkName": "上腹部",
+      "checkDescription": "额呃呃呃呃呃呃",
+      "checkResult": "11111111111"
+    },
+    "date": "2025-07-17T23:58:44.160Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "3524173e-231b-4f44-8b5a-eae193c91a7a",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "超声",
+      "checkName": "心脏",
+      "checkDescription": "额呃呃呃呃呃呃",
+      "checkResult": "33333333"
+    },
+    "date": "2025-07-17T23:59:06.308Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "c21bcf3d-8f44-4703-8d1b-404d089b1f1c",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "CT",
+      "checkName": "肺",
+      "checkDescription": "呃呃呃呃呃",
+      "checkResult": "11111111"
+    },
+    "date": "2024-05-08T07:00:00.000Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "36c0f93d-2a48-4d3c-9b28-6596076d75fb",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "id": "c993ac8c-8cba-4395-befb-08e4183a94e5",
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "X线",
+      "checkName": "左手",
+      "checkDescription": "额呃呃呃呃呃呃",
+      "checkResult": "11111111"
+    },
+    "date": "2025-07-18T00:14:37.846Z",
+    "keywords": [],
+    "isManual": true
+  },
+  {
+    "id": "28a65bc1-89c3-4482-961e-ac5f7d1482f2",
+    "documentType": "diagnostic_report",
+    "patientInfo": {
+      "name": "六",
+      "birthDate": "1994-05-18",
+      "gender": "女"
+    },
+    "medicalData": {
+      "medicalInstitution": "斯坦福",
+      "checkType": "电生理",
+      "checkName": "心电图",
+      "checkDescription": "3333333333",
+      "checkResult": "33333333333",
+      "boneDensityTable": []
+    },
+    "date": "2025-07-18T00:18:05.219Z",
+    "keywords": [],
+    "isManual": true,
+    "updatedAt": "2025-07-18T00:29:30.213Z"
   }
 ]

@@ -650,7 +650,7 @@ app.get('/', (req, res) => {
 // API路由
 
 // 上传PDF文件
-app.post('/api/upload-pdf', upload.single('pdf'), async (req, res) => {
+app.post('/api/upload-pdf', upload.single('pdfFile'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: '没有上传文件' });
@@ -990,6 +990,254 @@ app.post('/api/generate-report', (req, res) => {
     res.status(500).json({ error: '生成报告失败', details: error.message });
   }
 });
+
+// 新增：自定义报告生成API
+app.post('/api/reports/generate-custom', (req, res) => {
+  const { patientId, keywords } = req.body;
+
+  if (!patientId || !keywords || !Array.isArray(keywords) || keywords.length === 0) {
+    return res.status(400).json({ error: '缺少必须的参数：patientId 和 keywords' });
+  }
+
+  try {
+    const patient = patients.find(p => p.id === patientId);
+    if (!patient) {
+      return res.status(404).json({ error: '未找到指定患者' });
+    }
+
+    // 1. 筛选出该患者的所有医疗记录
+    const patientRecords = medicalRecords.filter(record => 
+      record.patientInfo?.id === patientId || record.patientInfo?.name === patient.name
+    );
+    
+
+
+    let reportData = [];
+
+    // 2. 获取记录详情的辅助函数
+    const getRecordDetails = (record) => {
+      const medicalData = record.medicalData || {};
+      
+      // 根据文档类型提取不同的详情，保持原始结构
+      return {
+        documentType: record.documentType,
+        medicalInstitution: medicalData.medicalInstitution || '',
+        ...medicalData
+      };
+    };
+
+    // 3. 检验项目中文映射配置
+    const labTestChineseMapping = {
+      '血常规': 'blood_routine',
+      '胆固醇检测': 'cholesterol',
+      '生化检测': 'biochemistry',
+      '甲状腺功能': 'thyroid_function',
+      '内分泌功能': 'endocrine_function',
+      '糖尿病相关': 'diabetes_related',
+      '脂质代谢': 'lipid_metabolism',
+      '心血管标志物': 'cardiovascular_markers',
+      '肾脏功能': 'kidney_function',
+      '肝脏功能': 'liver_function',
+      '骨骼代谢': 'bone_metabolism',
+      '免疫功能': 'immune_function',
+      '感染标志物': 'infection_markers',
+      '凝血功能': 'coagulation',
+      '肿瘤标志物': 'tumor_markers',
+      '过敏检测': 'allergy_tests',
+      '药物监测': 'drug_monitoring',
+      '尿常规': 'urine_routine',
+      '尿培养': 'urine_culture',
+      '尿生化': 'urine_biochemistry',
+      '粪便常规': 'stool_routine',
+      '脑脊液常规': 'cerebrospinal_fluid_routine'
+    };
+
+    // 文档类型中文映射
+    const documentTypeMapping = {
+      '住院记录': 'inpatient_record',
+      '门诊记录': 'outpatient_record', 
+      '检验报告': 'lab_result',
+      '检查报告': 'diagnostic_report',
+      '其他': 'other'
+    };
+
+    // 3. 增强的深度搜索函数
+    const deepSearchAndExtract = (record, keyword, context, originalKeyword) => {
+      let findings = [];
+      const lowerKeyword = keyword.toLowerCase();
+      const displayKeyword = originalKeyword || keyword; // 用于显示的关键词（优先使用原始中文关键词）
+
+             // 获取关键词的英文映射（如果是中文检验项目）
+       const englishMapping = labTestChineseMapping[originalKeyword || keyword];
+       console.log(`深度搜索: 搜索关键词="${keyword}", 原始关键词="${originalKeyword}", 英文映射="${englishMapping}"`);
+
+       
+       // 检查是否搜索文档类型（中文）
+       const documentTypeFromChinese = Object.entries(documentTypeMapping).find(([chinese, english]) => 
+         chinese.includes(keyword)
+       );
+       const documentTypeMapping_en = documentTypeFromChinese ? documentTypeFromChinese[1] : null;
+
+      // 文档类型匹配
+      if (record.documentType) {
+        const docTypeText = getDocumentTypeText(record.documentType);
+        if (docTypeText.toLowerCase().includes(lowerKeyword) || 
+            record.documentType === documentTypeMapping_en) {
+          findings.push({
+            keyword: displayKeyword,
+            indicator: '文档类型',
+            value: docTypeText,
+            date: context.date,
+            sourceRecordId: context.id,
+            sourceDocumentType: context.documentType,
+            medicalInstitution: context.medicalInstitution,
+            recordDetails: context.recordDetails
+          });
+        }
+      }
+
+      // 疾病关键词匹配
+      if (record.keywords && Array.isArray(record.keywords)) {
+        record.keywords.forEach(diseaseKeyword => {
+          if (diseaseKeyword.toLowerCase().includes(lowerKeyword)) {
+            findings.push({
+              keyword: displayKeyword,
+              indicator: '相关疾病',
+              value: diseaseKeyword,
+              date: context.date,
+              sourceRecordId: context.id,
+              sourceDocumentType: context.documentType,
+              medicalInstitution: context.medicalInstitution,
+              recordDetails: context.recordDetails
+            });
+          }
+        });
+      }
+
+      // 递归搜索函数（搜索整个记录，不仅仅是medicalData）
+      const search = (currentObj, path = [], objName = '') => {
+        if (!currentObj) return;
+
+        if (Array.isArray(currentObj)) {
+          currentObj.forEach((item, index) => search(item, [...path, index], objName));
+          return;
+        }
+
+        if (typeof currentObj === 'object') {
+          Object.entries(currentObj).forEach(([key, value]) => {
+            const newPath = [...path, key];
+            const contextName = objName ? `${objName}.${key}` : key;
+            
+            // 检查key是否包含关键词
+            if (key.toLowerCase().includes(lowerKeyword)) {
+              findings.push({
+                keyword: displayKeyword,
+                indicator: key,
+                value: String(value),
+                date: context.date,
+                sourceRecordId: context.id,
+                sourceDocumentType: context.documentType,
+                medicalInstitution: context.medicalInstitution,
+                recordDetails: context.recordDetails
+              });
+            }
+
+            // 继续递归搜索
+            search(value, newPath, contextName);
+          });
+          return;
+        }
+        
+        // 检查字符串值是否包含关键词
+        if (typeof currentObj === 'string' && currentObj.toLowerCase().includes(lowerKeyword)) {
+          const fieldName = path.length > 0 ? path[path.length - 1] : '相关信息';
+          const indicatorName = originalKeyword && originalKeyword !== keyword ? 
+            `${fieldName}（中文检验项目匹配）` : fieldName;
+          
+          findings.push({
+            keyword: displayKeyword,
+            indicator: indicatorName,
+            value: originalKeyword && originalKeyword !== keyword ? 
+              `${originalKeyword} → ${currentObj}` : currentObj,
+            date: context.date,
+            sourceRecordId: context.id,
+            sourceDocumentType: context.documentType,
+            medicalInstitution: context.medicalInstitution,
+            recordDetails: context.recordDetails
+          });
+        }
+      };
+      
+      // 搜索整个记录对象，而不仅仅是medicalData
+      search(record);
+      console.log(`深度搜索完成，找到 ${findings.length} 个匹配项`);
+      return findings;
+    };
+
+
+    
+    // 4. 扩展关键词列表，包含英文映射
+    const expandedKeywords = [];
+    const keywordMappings = {}; // 用于追踪原始关键词和其映射的关系
+    
+    keywords.forEach(keyword => {
+      expandedKeywords.push(keyword); // 添加原始关键词
+      keywordMappings[keyword] = keyword; // 原始关键词映射到自己
+      
+      // 如果有英文映射，也添加英文关键词
+      const englishMapping = labTestChineseMapping[keyword];
+      console.log(`关键词: "${keyword}", 英文映射: "${englishMapping}"`);
+      if (englishMapping) {
+        expandedKeywords.push(englishMapping);
+        keywordMappings[englishMapping] = keyword; // 英文关键词映射到原始中文关键词
+        console.log(`添加英文映射关键词: "${englishMapping}"`);
+      }
+    });
+    
+    console.log(`扩展后的关键词列表:`, expandedKeywords);
+    console.log(`关键词映射关系:`, keywordMappings);
+    
+    // 5. 遍历扩展后的关键词和记录
+    expandedKeywords.forEach(searchKeyword => {
+      const originalKeyword = keywordMappings[searchKeyword];
+      console.log(`搜索关键词: "${searchKeyword}", 原始关键词: "${originalKeyword}"`);
+      
+      patientRecords.forEach(record => {
+        // 准备上下文信息
+        const contextInfo = {
+          date: record.date,
+          id: record.id,
+          documentType: record.documentType,
+          medicalInstitution: record.medicalData?.medicalInstitution || '未知机构',
+          recordDetails: getRecordDetails(record)
+        };
+        
+        // 在整个记录中进行深度搜索，传递原始关键词用于显示
+        const results = deepSearchAndExtract(record, searchKeyword, contextInfo, originalKeyword);
+        if (results.length > 0) {
+          console.log(`找到 ${results.length} 个匹配结果，关键词: "${searchKeyword}"`);
+          reportData.push(...results);
+        }
+      });
+    });
+
+    // 5. 对结果进行去重和排序
+    const uniqueResults = Array.from(new Map(reportData.map(item => [JSON.stringify(item), item])).values());
+    uniqueResults.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    res.json({
+      success: true,
+      reportTitle: `${patient.name} 的健康指标报告`,
+      generatedAt: new Date().toISOString(),
+      data: uniqueResults
+    });
+
+  } catch (error) {
+    console.error('自定义报告生成失败:', error);
+    res.status(500).json({ error: '生成自定义报告时发生服务器错误', details: error.message });
+  }
+});
+
 
 // 获取报告类型选项
 app.get('/api/report-types', (req, res) => {

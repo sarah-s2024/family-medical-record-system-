@@ -40,15 +40,5 @@
     "email": "1",
     "address": "1",
     "createdAt": "2025-07-12T00:13:57.602Z"
-  },
-  {
-    "id": "d481c660-d8a6-4014-a094-fa6483e95361",
-    "name": "Tianqiao Chen",
-    "birthDate": "1973-05-16",
-    "gender": "男",
-    "height": "170",
-    "phone": "1",
-    "email": "1",
-    "createdAt": "2025-07-12T02:53:18.976Z"
   }
 ]
