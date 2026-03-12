@@ -15,13 +15,9 @@ const PORT = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
-// 静态文件服务
+// 静态文件服务（必须在 API 路由之后注册通配符，此处只注册静态资源目录）
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'client/build')));
-  
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
 }
 
 // 创建必要的目录
@@ -1475,6 +1471,13 @@ app.delete('/api/patients/:id', (req, res) => {
     res.status(500).json({ error: '删除患者失败', details: error.message });
   }
 });
+
+// 前端路由兜底（必须在所有 API 路由之后）
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  });
+}
 
 // 启动服务器
 app.listen(PORT, () => {
